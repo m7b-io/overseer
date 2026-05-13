@@ -25,6 +25,7 @@ jobs:
         uses: jdx/mise-action@v4.0.1
         with:
           cache: true
+          cache_key_prefix: mise-ci-${{ github.event_name == 'pull_request' && 'pr' || github.ref_name }}
           version: 2026.4.5
 
       - name: Install tools
