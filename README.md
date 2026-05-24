@@ -21,20 +21,20 @@ https://github.com/user-attachments/assets/45c6b1ce-6ddb-4f92-96c2-fd662ec62ab2
 Install the latest release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/oomathias/overseer/main/install | bash
+curl -fsSL https://raw.githubusercontent.com/m7b-io/overseer/main/install | bash
 overseer version
 ```
 
 Install a specific release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/oomathias/overseer/main/install | OVERSEER_VERSION=vX.Y.Z bash
+curl -fsSL https://raw.githubusercontent.com/m7b-io/overseer/main/install | OVERSEER_VERSION=vX.Y.Z bash
 ```
 
 Install to a custom path:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/oomathias/overseer/main/install | OVERSEER_INSTALL_DIR="$HOME/.local/bin" bash
+curl -fsSL https://raw.githubusercontent.com/m7b-io/overseer/main/install | OVERSEER_INSTALL_DIR="$HOME/.local/bin" bash
 ```
 
 ## Config

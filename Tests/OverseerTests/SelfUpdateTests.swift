@@ -67,7 +67,7 @@ final class SelfUpdateTests: XCTestCase {
     _ = try manager.updateToLatest(stdoutHandler: nil, stderrHandler: nil)
 
     let source = try XCTUnwrap(downloadedURL)
-    XCTAssertEqual(source.absoluteString, "https://raw.githubusercontent.com/oomathias/overseer/main/install")
+    XCTAssertEqual(source.absoluteString, "https://raw.githubusercontent.com/m7b-io/overseer/main/install")
   }
 
   func testUpdateIgnoresBashEnvironmentFromCaller() throws {

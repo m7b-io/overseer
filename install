@@ -3,7 +3,7 @@
 set -euo pipefail
 umask 022
 
-REPO="oomathias/overseer"
+REPO="m7b-io/overseer"
 BIN_NAME="overseer"
 
 # Supported env vars:
