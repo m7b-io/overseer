@@ -1,8 +1,8 @@
 [tools]
-go = "1.26.2"
-goreleaser = "2.15.4"
+go = "1.26.3"
+goreleaser = "2.16.0"
 cosign = "3.0.6"
-svu = "3.4.0"
+svu = "3.4.1"
 
 [settings]
 not_found_auto_install = true
