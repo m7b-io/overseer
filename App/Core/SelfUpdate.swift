@@ -8,7 +8,8 @@ final class SelfUpdateManager {
   typealias DownloadScript = (_ sourceURL: URL, _ destinationURL: URL) throws -> Void
 
   static let installerURL = URL(string: "https://raw.githubusercontent.com/m7b-io/overseer/main/install")!
-  private static let installerPATH = "/usr/bin:/bin:/usr/sbin:/sbin"
+  private static let installerPATH =
+    "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/usr/local/bin"
 
   private let commandRunner: CommandRunner
   private let environment: [String: String]

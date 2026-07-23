@@ -123,6 +123,25 @@ final class SelfUpdateTests: XCTestCase {
     XCTAssertNoThrow(try manager.updateToLatest(stdoutHandler: nil, stderrHandler: nil))
   }
 
+  func testUpdateTrustedPathIncludesHomebrewCommands() throws {
+    let root = try makeTempDirectory()
+    defer { try? FileManager.default.removeItem(at: root) }
+
+    let manager = SelfUpdateManager(
+      environment: ["PATH": "/caller/bin"],
+      temporaryDirectory: root,
+      executablePathResolver: { root.appendingPathComponent("bin/overseer").path },
+      downloadScript: { _, destinationURL in
+        try """
+        expected_path="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/usr/local/bin"
+        [ "$PATH" = "$expected_path" ]
+        """.write(to: destinationURL, atomically: true, encoding: .utf8)
+      }
+    )
+
+    XCTAssertNoThrow(try manager.updateToLatest(stdoutHandler: nil, stderrHandler: nil))
+  }
+
   private func makeTempDirectory() throws -> URL {
     let root = FileManager.default.temporaryDirectory
       .appendingPathComponent("overseer-self-update-tests-\(UUID().uuidString)", isDirectory: true)
