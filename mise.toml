@@ -98,8 +98,12 @@ fi
 current="$(svu current --tag.prefix v --tag.mode all)"
 next="$(svu next --tag.prefix v --tag.mode all)"
 
+if [ "$next" = "$current" ] && [ -n "$(git log "$current..HEAD" --grep='^chore:' -1 --format=%H)" ]; then
+  next="$(svu patch --tag.prefix v --tag.mode all)"
+fi
+
 if [ "$next" = "$current" ]; then
-  printf 'No releasable commits found since %s (need feat/fix/breaking).\n' "$current"
+  printf 'No releasable commits found since %s (need feat/fix/chore/breaking).\n' "$current"
   exit 1
 fi
 
