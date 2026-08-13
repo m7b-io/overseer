@@ -19,14 +19,14 @@ jobs:
     runs-on: blacksmith-6vcpu-macos-26
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151
+        uses: jdx/mise-action@3c2e0cf82a5b2e5249f0d3635a4d83d0ae861518
         with:
           cache: true
           cache_key_prefix: mise-ci-${{ github.event_name == 'pull_request' && 'pr' || github.ref_name }}
-          version: 2026.5.18
+          version: 2026.8.5
 
       - name: Install tools
         run: mise install
