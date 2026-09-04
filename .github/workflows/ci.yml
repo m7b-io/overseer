@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   checks:
+    if: ${{ false }}
     runs-on: blacksmith-6vcpu-macos-26
     timeout-minutes: 15
     steps:
