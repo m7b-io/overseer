@@ -12,6 +12,7 @@ permissions:
 jobs:
   goreleaser:
     runs-on: blacksmith-6vcpu-macos-26
+    timeout-minutes: 15
     env:
       MACOS_SIGN_P12: ${{ secrets.MACOS_SIGN_P12 }}
       MACOS_SIGN_PASSWORD: ${{ secrets.MACOS_SIGN_PASSWORD }}
