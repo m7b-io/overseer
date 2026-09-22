@@ -16,12 +16,17 @@ concurrency:
 
 jobs:
   checks:
-    if: ${{ false }}
-    runs-on: blacksmith-6vcpu-macos-26
+    runs-on:
+      group: m7b-squid
+      labels: m7b-macos-arm64
     timeout-minutes: 15
+    env:
+      DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Setup mise
         uses: jdx/mise-action@3c2e0cf82a5b2e5249f0d3635a4d83d0ae861518

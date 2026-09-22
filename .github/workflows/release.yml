@@ -11,20 +11,32 @@ permissions:
 
 jobs:
   goreleaser:
-    if: ${{ false }}
-    runs-on: blacksmith-6vcpu-macos-26
+    runs-on:
+      group: m7b-squid
+      labels: m7b-macos-arm64
     timeout-minutes: 15
     env:
-      MACOS_SIGN_P12: ${{ secrets.MACOS_SIGN_P12 }}
-      MACOS_SIGN_PASSWORD: ${{ secrets.MACOS_SIGN_PASSWORD }}
-      MACOS_NOTARY_KEY: ${{ secrets.MACOS_NOTARY_KEY }}
-      MACOS_NOTARY_KEY_ID: ${{ secrets.MACOS_NOTARY_KEY_ID }}
-      MACOS_NOTARY_ISSUER_ID: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
+      DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
+          persist-credentials: false
+
+      - name: Load release secrets
+        uses: 1password/load-secrets-action@70062d7a876d3eb6334754fa26efd2fbd90c32f2
+        with:
+          export-env: true
+          version: 2.39.0
+        env:
+          OP_CONNECT_HOST: https://vault.m7b.io
+          OP_CONNECT_TOKEN: ${{ secrets.VAULT_OVERSEER_RELEASE }}
+          MACOS_NOTARY_ISSUER_ID: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/55920b96f36b46346238a5c4
+          MACOS_NOTARY_KEY: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/17d20708816ffca9a49c0264
+          MACOS_NOTARY_KEY_ID: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/a51ddac6cefce03cd8e437af
+          MACOS_SIGN_P12: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/xnvhe5mawjt3cvqibum3cv6zga
+          MACOS_SIGN_PASSWORD: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/c0669fbb8623da8f934a2477
 
       - name: Setup Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
@@ -44,4 +56,4 @@ jobs:
           version: v2.17.1
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
