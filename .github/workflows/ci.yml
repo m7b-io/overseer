@@ -42,10 +42,10 @@ jobs:
         run: mise run fmt-check
 
       - name: Test
-        run: mise run test
+        run: swift test --disable-sandbox
 
       - name: Build release
-        run: mise run build-release
+        run: swift build -c release --disable-sandbox
 
       - name: Release config check
         run: mise run release-check
