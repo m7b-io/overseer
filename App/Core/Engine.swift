@@ -53,12 +53,12 @@ final class DecisionEngine {
         let key = ViolationKey(ruleIndex: ruleIndex, pid: process.pid)
         let current = currentMetricValue(metric: rule.metric, process: process)
         let status: TrackStatus = current >= rule.threshold ? .violating : .ok
-        let processLabel = ruleProcessLabel(rule.process)
+        let processLabel = processDisplayName(process)
 
         if !isAllProcessRule(rule.process) {
           tracks.append(
             TrackEvent(
-              ruleProcess: processLabel,
+              ruleProcess: ruleProcessLabel(rule.process),
               pid: process.pid,
               metric: rule.metric,
               value: current,
@@ -195,6 +195,14 @@ private func isAllProcessRule(_ ruleProcess: String?) -> Bool {
 
 private func ruleProcessLabel(_ ruleProcess: String?) -> String {
   normalizedProcessFilter(ruleProcess) ?? "*"
+}
+
+private func processDisplayName(_ process: ProcessInfo) -> String {
+  if let name = normalizedProcessFilter(process.name) {
+    return name
+  }
+  let commandName = (process.command as NSString).lastPathComponent
+  return normalizedProcessFilter(commandName) ?? "unknown process"
 }
 
 private func currentMetricValue(metric: Metric, process: ProcessInfo) -> Double {

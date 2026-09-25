@@ -3,6 +3,42 @@ import XCTest
 @testable import overseer
 
 final class DecisionEngineTests: XCTestCase {
+  func testAllProcessNotificationsUseMatchedProcessName() {
+    let engine = DecisionEngine()
+    let config = Config(
+      pollIntervalSeconds: 5,
+      onlyTreeRoots: false,
+      notifyOnKill: true,
+      warningThreshold: 90,
+      rules: [
+        Rule(
+          process: nil,
+          pidFileGlob: nil,
+          metric: .cpuPercent,
+          threshold: 100,
+          forSeconds: nil,
+          action: .notify,
+          signal: nil,
+          cooldownSeconds: nil
+        )
+      ]
+    )
+
+    let warming = process(pid: 42, ppid: 1, name: "my-process", cpuPercent: 95)
+    let warning = engine.evaluate(config: config, now: 1, processes: [warming], pidFilters: [:])
+    XCTAssertEqual(
+      warning.effects,
+      [.warning(message: "my-process pid=42 metric=cpu_percent value=95.00 reached 90% of threshold=100.00")]
+    )
+
+    let hot = process(pid: 42, ppid: 1, name: "my-process", cpuPercent: 120)
+    let notification = engine.evaluate(config: config, now: 2, processes: [hot], pidFilters: [:])
+    XCTAssertEqual(
+      notification.effects,
+      [.notify(message: "my-process pid=42 metric=cpu_percent value=120.00 threshold=100.00")]
+    )
+  }
+
   func testWarningEmitsOnceUntilMetricDropsBelowWarningThreshold() {
     let engine = DecisionEngine()
     let config = Config(
@@ -192,7 +228,7 @@ final class DecisionEngineTests: XCTestCase {
       warningThreshold: 0,
       rules: [
         Rule(
-          process: "node",
+          process: "NODE",
           pidFileGlob: nil,
           metric: .memoryMB,
           threshold: 100,
