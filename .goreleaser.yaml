@@ -13,9 +13,9 @@ before:
     - cp -R App Tests Package.swift .goreleaser-artifacts/source/
     - "python3 -c 'from pathlib import Path; Path(\".goreleaser-artifacts/source/App/Core/Version.swift\").write_text(\"import Foundation\\n\\nlet appVersion = \\\"{{ .Version }}\\\"\\n\")'"
     - swift build -c release --disable-sandbox --arch arm64 --package-path .goreleaser-artifacts/source
-    - cp .goreleaser-artifacts/source/.build/arm64-apple-macosx/release/overseer .goreleaser-artifacts/binaries/darwin_arm64/overseer
+    - "sh -c 'cp \"$(swift build -c release --disable-sandbox --arch arm64 --package-path .goreleaser-artifacts/source --show-bin-path)/overseer\" .goreleaser-artifacts/binaries/darwin_arm64/overseer'"
     - swift build -c release --disable-sandbox --arch x86_64 --package-path .goreleaser-artifacts/source
-    - cp .goreleaser-artifacts/source/.build/x86_64-apple-macosx/release/overseer .goreleaser-artifacts/binaries/darwin_amd64/overseer
+    - "sh -c 'cp \"$(swift build -c release --disable-sandbox --arch x86_64 --package-path .goreleaser-artifacts/source --show-bin-path)/overseer\" .goreleaser-artifacts/binaries/darwin_amd64/overseer'"
 
 builds:
   - id: overseer
