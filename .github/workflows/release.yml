@@ -33,7 +33,7 @@ jobs:
           OP_CONNECT_HOST: https://vault.m7b.io
           OP_CONNECT_TOKEN: ${{ secrets.VAULT_OVERSEER_RELEASE }}
           MACOS_NOTARY_ISSUER_ID: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/55920b96f36b46346238a5c4
-          MACOS_NOTARY_KEY: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/17d20708816ffca9a49c0264
+          MACOS_NOTARY_KEY_B64: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/2lwkyaxzpw5khtu25jub6sji7m
           MACOS_NOTARY_KEY_ID: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/a51ddac6cefce03cd8e437af
           MACOS_SIGN_P12: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/xnvhe5mawjt3cvqibum3cv6zga
           MACOS_SIGN_PASSWORD: op://n4bct6bnrutlzyhixr2vszfo34/z7xr4455ovgfqz4v33njk7znfi/c0669fbb8623da8f934a2477
