@@ -12,7 +12,7 @@ permissions:
 jobs:
   goreleaser:
     runs-on:
-      group: m7b-squid
+      group: m7b
       labels: m7b-macos-arm64
     timeout-minutes: 15
     env:
